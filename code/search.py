@@ -2,6 +2,10 @@ from pprint import pprint
 import os.path
 import sys
 
+from whoosh.index import open_dir
+
+from customQueryParser import *
+
 index_path = '../index'
 
 # Index object
@@ -11,7 +15,7 @@ if os.path.exists(index_path):
 else:
     print ('No index found at given path')
 
-parser = QueryParser('directions', schema = ix.schema)
+parser = CustomQueryParser(ix.schema)
 with ix.searcher() as searcher:
     # print (list(searcher.lexicon('directions')))
     while True:
