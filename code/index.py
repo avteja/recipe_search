@@ -3,9 +3,13 @@ from pprint import pprint
 import os.path
 import sys
 
+from whoosh.analysis import StandardAnalyzer
 from whoosh.fields import *
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
+
+from CustomTokenizer import CustomTokenizer
+from CustomFilter import CustomFilter
 
 recipe_json_file = '../data/epicurious/full_format_recipes.json'
 index_path = '../index'
@@ -17,9 +21,9 @@ pprint (recipe_data[0])
 
 # Setup Schema
 class RecipeSchema(SchemaClass):
-    title = TEXT(stored = True)
-    directions = TEXT(stored = True)
-    ingredients = TEXT(stored = True)
+    title = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | CustomFilter())
+    directions = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | CustomFilter())
+    ingredients = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | CustomFilter())
     categories = KEYWORD(stored = True, commas = True)
 
 # print ('Found', len(recipe_data), 'recipes')
@@ -37,6 +41,8 @@ writer = ix.writer()
 for recipe in recipe_data:
     if not recipe:
         continue
+    if ix_cnt % 1000 == 0:
+        print ('Indexed {} recipes'.format(ix_cnt))
     # print (recipe['directions'])
     u_title = recipe['title']
     u_directions = ' '.join(recipe['directions'])

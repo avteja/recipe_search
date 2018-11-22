@@ -3,8 +3,10 @@ import os.path
 import sys
 
 from whoosh.index import open_dir
+from whoosh.fields import *
+from whoosh.qparser import QueryParser
 
-from customQueryParser import *
+from CustomQueryParser import CustomQueryParser
 
 index_path = '../index'
 
@@ -16,12 +18,14 @@ else:
     print ('No index found at given path')
 
 parser = CustomQueryParser(ix.schema)
+# parser = QueryParser("directions", ix.schema)
 with ix.searcher() as searcher:
     # print (list(searcher.lexicon('directions')))
     while True:
         print ('Enter query string:', )
         query_str = input()
         parsed_query = parser.parse(query_str)
+        print (parsed_query)
         results = searcher.search(parsed_query, limit = 5)
         print (len(results))
         if len(results) > 0:
