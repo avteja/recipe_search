@@ -3,7 +3,7 @@ from pprint import pprint
 import os.path
 import sys
 
-from whoosh.analysis import StandardAnalyzer
+from whoosh.analysis import StandardAnalyzer, StemFilter
 from whoosh.fields import *
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
@@ -21,9 +21,9 @@ pprint (recipe_data[0])
 
 # Setup Schema
 class RecipeSchema(SchemaClass):
-    title = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | CustomFilter())
-    directions = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | CustomFilter())
-    ingredients = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | CustomFilter())
+    title = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | StemFilter() | CustomFilter())
+    directions = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | StemFilter() | CustomFilter())
+    ingredients = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | StemFilter() | CustomFilter())
     categories = KEYWORD(stored = True, commas = True)
 
 # print ('Found', len(recipe_data), 'recipes')

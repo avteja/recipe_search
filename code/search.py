@@ -26,7 +26,7 @@ with ix.searcher() as searcher:
         query_str = input()
         parsed_query = parser.parse(query_str)
         print (parsed_query)
-        results = searcher.search(parsed_query, limit = 5)
+        results = searcher.search(parsed_query, limit = 10)
         print (len(results))
         if len(results) > 0:
             print (results[0])
@@ -34,4 +34,5 @@ with ix.searcher() as searcher:
             # print (results[2])
         else:
             print ('No results found')
+        print (results.key_terms("ingredients"))
 
