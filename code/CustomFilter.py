@@ -6,6 +6,7 @@ wordnet_perl_file = '../data/prolog/wn_s.pl'
 f = open(wordnet_perl_file)
 t = Thesaurus.from_file(f)
 f.close()
+
 def return_synonyms(term):
     syns = t.synonyms(term)
     return syns
