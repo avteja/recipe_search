@@ -84,9 +84,12 @@ for recipe in recipe_data:
     u_title = recipe['title']
     u_directions = ' '.join(recipe['directions'])
     u_ingredients = ' '.join(recipe['ingredients'])
-    u_categories = ','.join(recipe['categories'])
-    if 'calories' in recipe and recipe['calories'] is not None:
+    u_categories = ','.join(recipe['categories']).lower()
+    # print (recipe['calories'])
+    if 'calories' in recipe and recipe['calories'] is not None and float(recipe['calories']) <= 800:
         u_calories = float(recipe['calories'])
+    else:
+        u_calories = None
     writer.add_document(title = u_title, directions = u_directions, ingredients = u_ingredients, categories = u_categories, calories = u_calories)
     ix_cnt += 1
 writer.commit()

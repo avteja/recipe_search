@@ -25,6 +25,7 @@ class RecipeSchema(SchemaClass):
     directions = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | StemFilter() | CustomFilter())
     ingredients = TEXT(stored = True, multitoken_query = 'or', analyzer = StandardAnalyzer() | StemFilter() | CustomFilter())
     categories = KEYWORD(stored = True, commas = True)
+    calories = NUMERIC(stored = True)
 
 # print ('Found', len(recipe_data), 'recipes')
 
@@ -47,8 +48,12 @@ for recipe in recipe_data:
     u_title = recipe['title']
     u_directions = ' '.join(recipe['directions'])
     u_ingredients = ' '.join(recipe['ingredients'])
-    u_categories = ','.join(recipe['categories'])
-    writer.add_document(title = u_title, directions = u_directions, ingredients = u_ingredients, categories = u_categories)
+    u_categories = ','.join(recipe['categories']).lower()
+    if 'calories' in recipe and recipe['calories'] is not None and float(recipe['calories']) <= 800:
+        u_calories = float(recipe['calories'])
+    else:
+        u_calories = None
+    writer.add_document(title = u_title, directions = u_directions, ingredients = u_ingredients, categories = u_categories, calories = u_calories)
     ix_cnt += 1
 writer.commit()
 print ('Indexed', ix_cnt, 'recipes')
