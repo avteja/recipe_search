@@ -17,11 +17,13 @@ f.close()
 def get_suggestions(query):
     final_ings = []
     qp = query.strip().split(',')
-    final_query = re.sub('[^A-Za-z0-9]+', '', qp[-1])
+    final_query = re.sub('[^A-Za-z0-9 ]+', '', qp[-1])
+    final_query = final_query.strip()
     print (final_query)
     for ing in all_ings:
-        if final_query in ing['value']:
+        if ing['value'].find(final_query) == 0:
             final_ings.append(ing)
+    final_ings.sort(key=lambda x: x['value'])
     if len(final_ings) > 5:
         final_ings = final_ings[: 5]
     return final_ings

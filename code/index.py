@@ -12,7 +12,7 @@ from CustomTokenizer import CustomTokenizer
 from CustomFilter import CustomFilter
 
 recipe_json_file = '../data/epicurious/full_format_recipes.json'
-index_path = '../index'
+index_path = '../index_test'
 
 with open(recipe_json_file) as f:
     recipe_data = json.load(f)

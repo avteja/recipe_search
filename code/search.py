@@ -10,7 +10,7 @@ from whoosh import columns, fields, index, sorting
 
 from CustomQueryParser import CustomQueryParser
 
-index_path = '../index'
+index_path = '../index_test'
 
 # Index object
 ix = None
@@ -136,9 +136,7 @@ def search(query):
                 all_res.append(dict_res)
 
         else:
-            if len(results) > 0:
-                print (results[0])
-            else:
+            if len(results) == 0:
                 print ('No results found')
 
             for result in results:
@@ -149,6 +147,9 @@ def search(query):
         
         if len(all_res) > 5:
             all_res = all_res[: 5]
+
+        # for res in all_res:
+        #     print (res) 
 
     return all_res
 
@@ -175,5 +176,5 @@ def search(query):
 #         print (results.key_terms("ingredients"))
 
 if __name__ == "__main__":
-    query = {'breakfast': ['false'], 'brunch': ['false'], 'lunch': ['false'], 'dinner': ['false'], 'cal200': ['false'], 'cal400': ['true'], 'cal600': ['false'], 'cal800': ['false'], '22-minute meals': ['false'], 'dairy free': ['false'], 'peanut free': ['false'], 'soy free': ['false'], 'wheat/gluten-free': ['false'], 'vegetarian': ['false'], 'text': ['corn'], 'request': ['2']}
+    query = {'breakfast': ['false'], 'brunch': ['false'], 'lunch': ['false'], 'dinner': ['false'], 'cal200': ['false'], 'cal400': ['false'], 'cal600': ['false'], 'cal800': ['false'], '22-minute meals': ['false'], 'dairy free': ['false'], 'peanut free': ['false'], 'soy free': ['false'], 'wheat/gluten-free': ['false'], 'vegetarian': ['false'], 'text': ['chicken'], 'request': ['2']}
     search(query)

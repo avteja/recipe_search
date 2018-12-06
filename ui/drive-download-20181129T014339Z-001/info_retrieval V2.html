@@ -7,24 +7,17 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<style type="text/css">
-	body .ui-autocomplete {
+<!-- <style type="text/css">
+	body .ui-menu-item {
 		background-color: 'white';
 	}
 
 
-</style>
+</style> -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-
-function split( val ) {
-	return val.split( /,\s*/ );
-}
-function extractLast( term ) {
-	return split( term ).pop();
-}
 $(function() {
     function split( val ) {
       return val.split( /,\s*/ );
@@ -32,7 +25,7 @@ $(function() {
     function extractLast( term ) {
       return split( term ).pop();
     }
- 
+ 	
     $("#text_query")
       // don't navigate away from the field on tab when selecting an item
       .on( "keydown", function( event ) {
@@ -52,6 +45,8 @@ $(function() {
 				success: function (result) {
 					console.log(result);
 					response(result);
+					$('.ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front').css('background-color', 'white');
+					$('.ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front').css('width', '570px');
 					// if (result.length == 0) {
 					// 	alert('Unable to process the given query');
 					// } else {
@@ -83,7 +78,27 @@ $(function() {
 
 function createDivs(result) {
 	var div = document.getElementById('parent_div');
-	div.innerHTML = ''
+	div.innerHTML = '';
+
+	if (result.length == 0) {
+		var p = document.createElement('p');
+		p.className = 'card-text';
+		p.textContent = 'No Results Found';
+
+		var bodyDiv = document.createElement('div');
+		bodyDiv.className = 'card-body';
+		bodyDiv.appendChild(p);
+
+		var topDiv = document.createElement('div');
+		topDiv.className = 'card';
+		topDiv.appendChild(bodyDiv);
+
+		var styleDiv = document.createElement('div');
+		styleDiv.style = 'padding-bottom: 30px;';
+		styleDiv.appendChild(topDiv);
+
+		parent_div.appendChild(styleDiv);
+	}
 
 	for (var i = 0; i < result.length; i++) {
         var obj = result[i];
@@ -105,7 +120,7 @@ function createDivs(result) {
 		var rowDiv = document.createElement('div');
 		rowDiv.className = 'row';
 		rowDiv.appendChild(titleDiv);
-		
+
 		if (calExists) {
 			var caloriesDiv = document.createElement('div');
 			caloriesDiv.className = 'col-sm-3';
@@ -183,7 +198,8 @@ getResults = function() {
 		success: function (result) {
 			console.log(result);
 			if (result.length == 0) {
-				alert('Unable to process the given query');
+				// alert('Unable to process the given query');
+				createDivs(result);
 			} else {
 				createDivs(result);
 				// wait(1000);
