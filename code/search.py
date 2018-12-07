@@ -153,28 +153,33 @@ def search(query):
 
     return all_res
 
-# parser = CustomQueryParser(ix.schema)
-# # parser = QueryParser("directions", ix.schema)
-# with ix.searcher() as searcher:
-#     # print (list(searcher.lexicon('directions')))
-#     while True:
-#         print ('Enter query string:', )
-#         query_str = input()
-#         parsed_query = parser.parse(query_str)
-#         print (parsed_query)
-#         results = searcher.search(parsed_query, limit = 10)
-#         print (len(results))
-#         if len(results) > 0:
-#             print (results[0])
-#             print (type(results[0]))
-#             print (results[0].keys())
-#             print (results[0]['title'])
-#             # print (results[1])
-#             # print (results[2])
-#         else:
-#             print ('No results found')
-#         print (results.key_terms("ingredients"))
+def search_terms():
+    parser = CustomQueryParser(ix.schema)
+    # parser = QueryParser("directions", ix.schema)
+    with ix.searcher() as searcher:
+        # print (list(searcher.lexicon('directions')))
+        while True:
+            print ('Enter query string:', )
+            query_str = input()
+            parsed_query = parser.parse(query_str)
+            print (parsed_query)
+            results = searcher.search(parsed_query, limit = 10)
+            print (len(results))
+            if len(results) > 0:
+                print (results[0])
+                print (type(results[0]))
+                print (results[0].keys())
+                print (results[0]['title'])
+                # print (results[1])
+                # print (results[2])
+            else:
+                print ('No results found')
+            print (results.key_terms("ingredients"))
+            print (results.key_terms("directions"))
+            print (results.key_terms("categories"))
+            print (results.key_terms("title"))
 
 if __name__ == "__main__":
-    query = {'breakfast': ['false'], 'brunch': ['false'], 'lunch': ['false'], 'dinner': ['false'], 'cal200': ['false'], 'cal400': ['false'], 'cal600': ['false'], 'cal800': ['false'], '22-minute meals': ['false'], 'dairy free': ['false'], 'peanut free': ['false'], 'soy free': ['false'], 'wheat/gluten-free': ['false'], 'vegetarian': ['false'], 'text': ['chicken'], 'request': ['2']}
-    search(query)
+    # query = {'breakfast': ['false'], 'brunch': ['false'], 'lunch': ['false'], 'dinner': ['false'], 'cal200': ['false'], 'cal400': ['false'], 'cal600': ['false'], 'cal800': ['false'], '22-minute meals': ['false'], 'dairy free': ['false'], 'peanut free': ['false'], 'soy free': ['false'], 'wheat/gluten-free': ['false'], 'vegetarian': ['false'], 'text': ['chicken'], 'request': ['2']}
+    # search(query)
+    search_terms()
