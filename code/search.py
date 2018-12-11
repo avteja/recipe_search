@@ -6,7 +6,7 @@ from whoosh.index import open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
 
-from whoosh import columns, fields, index, sorting
+from whoosh import columns, fields, index, sorting, scoring
 
 from CustomQueryParser import CustomQueryParser
 
@@ -166,10 +166,13 @@ def search_terms():
             results = searcher.search(parsed_query, limit = 10)
             print (len(results))
             if len(results) > 0:
-                print (results[0])
-                print (type(results[0]))
-                print (results[0].keys())
+                # print (results[0])
+                # print (type(results[0]))
+                # print (results[0].keys())
                 print (results[0]['title'])
+                print (results[1]['title'])
+                print (results[2]['title'])
+                print (results[3]['title'])
                 # print (results[1])
                 # print (results[2])
             else:
